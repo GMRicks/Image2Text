@@ -1,0 +1,65 @@
+<!-- templates/index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Image Captioning - Home</title>
+  <!-- Link to the main stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <!-- Link to the JavaScript file for interactivity -->
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+  <!-- Optionally include an icon library (e.g., FontAwesome) for the upload icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/kTc3N6K1p3Jv4Snh/O0+6gR+3x1J+Vp/hldhwc60kG+o2gVn+77cFq7LC2bIacwJH8dLwXKOWa1Xg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <!-- Hero header with gradient background and animated text -->
+  <header class="hero">
+    <div class="hero-content">
+      <h1>Image Captioning</h1>
+      <p>Upload any image and let our AI describe it in extraordinary detail.</p>
+    </div>
+  </header>
+
+  <!-- Main content area -->
+  <main>
+    <!-- Upload Section -->
+    <section class="upload-section">
+      <form id="uploadForm" method="POST" enctype="multipart/form-data">
+        <!-- Custom styled file upload button -->
+        <label for="image" class="custom-file-upload">
+          <i class="fa fa-cloud-upload-alt"></i> Choose an Image
+        </label>
+        <input type="file" id="image" name="image" accept="image/*">
+        <!-- Submit button for caption generation -->
+        <button type="submit">Generate Caption</button>
+      </form>
+    </section>
+    
+    <!-- History Section -->
+    <section class="history-section">
+      <h2>Caption History</h2>
+      {% if history %}
+        <div class="history-grid">
+          {% for item in history %}
+            <div class="history-item">
+              <img src="{{ url_for('uploaded_file', filename=item.filename) }}" alt="Uploaded Image">
+              <div class="caption-overlay">
+                <p>{{ item.caption }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p>No captions yet. Upload an image to see the magic!</p>
+      {% endif %}
+    </section>
+  </main>
+
+  <!-- Footer with site credits -->
+  <footer>
+    <p>&copy; 2025 Image Captioning App. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
+
